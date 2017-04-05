@@ -1,40 +1,40 @@
 package main.model;
 
-import java.util.ArrayList;
 
-public class ViajeCorto extends Viaje {
+public class ViajeCorto extends Viaje implements Costo{
 
-private double costoReal;
+	private boolean efectivo;
 private int descuentoPorEfectivo =95;
+private double costo;
 
-public ViajeCorto(int distance, ArrayList<Peaje> peaje, int numeroDeViaje, Camion camion) {
-	super(distance, peaje, numeroDeViaje, camion);
+public ViajeCorto(int distance, int numeroDeViaje, Camion camion) {
+	super(distance, numeroDeViaje, camion);
 	// TODO Auto-generated constructor stub
 }
 
+public ViajeCorto(int distance, int numeroDeViaje, Camion camion, Peon [] peones) {
+	super(distance, numeroDeViaje, camion, peones);
+	// TODO Auto-generated constructor stub
+}
+
+public double getCosto() {
+	return costo;
+}
+
 public double costoTotal(boolean pagoEnEfectivo) {
-	return (pagoEnEfectivo)?((costoReal*descuentoPorEfectivo)/100):costoReal;
+	efectivo=pagoEnEfectivo;
+	costo=costoTotal();
+	return costo;
 }
-@Override
-void agregarPeon(Peon peon) {
-	// TODO Auto-generated method stub
-	peones.add(peon);
-}
-@Override
-void removerPeon(Peon peon) {
-	// TODO Auto-generated method stub
-	peones.remove(peon);
 
-}
-@Override
-boolean estaEnElCamion(Peon peon) {
-	// TODO Auto-generated method stub
-	return peones.contains(peon);
 
-}
+
+
+
 @Override
-ArrayList<Peon> peonesEnCamion() {
-	// TODO Auto-generated method stub
-	return peones;
+public double costoTotal() {
+	double costo=super.getCostoBasico();
+	double costoAuxiliar=(efectivo)?((costo*descuentoPorEfectivo)/100):costo;
+	return costoAuxiliar;
 }
 }

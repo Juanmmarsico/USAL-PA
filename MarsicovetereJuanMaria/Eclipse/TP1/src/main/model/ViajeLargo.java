@@ -1,42 +1,34 @@
 package main.model;
 
-import java.util.ArrayList;
 
-public class viajeLargo extends Viaje{
+public class ViajeLargo extends Viaje implements Costo{
 	
-	private double costo;
 	private final int excesoDistancia = 150;
 	private final double excesoCosto = 0.015;
 	private double costoTotal;
 	
 
-	public viajeLargo(int distance, ArrayList<Peaje> peaje, int numeroDeViaje, Camion camion) {
-		super(distance, peaje, numeroDeViaje, camion);
+	public ViajeLargo(int distance, int numeroDeViaje, Camion camion) {
+		super(distance, numeroDeViaje, camion);
 		// TODO Auto-generated constructor stub
-		costoTotal= costo + ((distance>1000)?(costo*((distance-1000)/150)*excesoCosto):0);
+	}
+	public ViajeLargo(int distance, int numeroDeViaje, Camion camion,Peon[] peones) {
+		super(distance, numeroDeViaje, camion, peones);
+		// TODO Auto-generated constructor stub
+	}
+	public double costoTotal() {
+		costoTotal=calcularCostoTotal();
+		return costoTotal;
+	}
+	public double getCosto() {
+		return costoTotal;
 	}
 	
-	@Override
-	void agregarPeon(Peon peon) {
-		// TODO Auto-generated method stub
-		peones.add(peon);
-	}
-	@Override
-	void removerPeon(Peon peon) {
-		// TODO Auto-generated method stub
-		peones.remove(peon);
-
-	}
-	@Override
-	boolean estaEnElCamion(Peon peon) {
-		// TODO Auto-generated method stub
-		return peones.contains(peon);
-
-	}
-	@Override
-	ArrayList<Peon> peonesEnCamion() {
-		// TODO Auto-generated method stub
-		return peones;
+	private double calcularCostoTotal(){
+		double costo=super.getCostoBasico();
+		double costoAuxiliar=0;
+		costoAuxiliar = costoAuxiliar + ((distance>1000)?(costo*((distance-1000)/excesoDistancia)*excesoCosto):0);
+		return costoAuxiliar;
 	}
 	
 	

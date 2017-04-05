@@ -3,6 +3,7 @@ package main.model;
 public class Peaje {
 private int importe;
 private String lugar;
+
 public Peaje(int importe, String lugar) {
 	super();
 	this.importe = importe;

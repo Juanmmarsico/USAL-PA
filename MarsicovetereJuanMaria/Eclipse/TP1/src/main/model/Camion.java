@@ -1,17 +1,16 @@
 package main.model;
 
-import java.lang.reflect.Array;
-import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Camion {
+	
 private String patente;
-private Date fechaPatentamiento;
+private Calendar fechaPatentamiento;
 private int cargaMaxima;
 private boolean enUso;
 
 
-public Camion(String patente, Date fechaPatentamiento, int cargaMaxima) {
+public Camion(String patente, Calendar fechaPatentamiento, int cargaMaxima) {
 	this.patente = patente;
 	this.fechaPatentamiento = fechaPatentamiento;
 	this.cargaMaxima = cargaMaxima;
@@ -26,6 +25,16 @@ public void cambiarEstadoCamion(){
 public boolean estaSiendoUsado(){
 	return enUso;
 }
-
-
+public String getPatente() {
+	return patente;
+}
+public int getCargaMaxima() {
+	return cargaMaxima;
+}
+public void setCargaMaxima(int cargaMaxima) {
+	this.cargaMaxima = cargaMaxima;
+}
+public Calendar getFechaPatentamiento() {
+	return fechaPatentamiento;
+}
 }
