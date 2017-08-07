@@ -68,4 +68,8 @@ public class FriendController {
 //	ownwerController.getOwner().AddFriend(new Friend(id,name, lastName,adeuda));
 	id++;
 	}
+	public void readFriends(String path) {
+		// TODO Auto-generated method stub
+		System.out.println(path);
+	}
 }

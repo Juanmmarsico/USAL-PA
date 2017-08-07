@@ -12,6 +12,8 @@ public abstract class ExpenseManagerAction  extends AbstractAction {
 		this.expenseManager= expenseManager;
 	}
 	
-
+public ExpenseManager getExpenseManager() {
+	return expenseManager;
+}
 
 }

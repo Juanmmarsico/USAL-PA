@@ -3,6 +3,10 @@ package main.GUI.mainWindow.Window;
 
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
@@ -67,6 +71,19 @@ public class MainFrame {
 	        mainFrame.add(buildButtonPanel(), BorderLayout.SOUTH);
 
 	        configMainFrameLayout((BorderLayout) mainFrameLayout);
+	        
+	        mainFrame.addWindowListener(new WindowAdapter() {
+	        	 @Override
+	        	    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+	        	        if (JOptionPane.showConfirmDialog(mainFrame, 
+	        	            "Are you sure to close this window?", "Really Closing?", 
+	        	            JOptionPane.YES_NO_OPTION,
+	        	            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+	        	        	expenseManager.SaveAllValues();
+	        	            System.exit(0);
+	        	        }
+	        	    }
+			});
 
 	        mainFrame.pack();
 
@@ -139,12 +156,25 @@ public class MainFrame {
 	        expenseMenu.add(about);
 
 	        exit = new JMenuItem("salir");
+	        exit.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					closeApp();
+				}
+			});
 	        expenseMenu.add(exit);
 
 	        return expenseMenu;
 	    }
 	    
-	    private JMenu buildOperation() {
+	    protected void closeApp() {
+			// TODO Auto-generated method stub
+	    	mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
+	    }
+
+		private JMenu buildOperation() {
 	        expenseMenu = new JMenu("Operaciones");
 	
 	        addExpense = new JMenuItem("Agregar Gasto o ingreso");

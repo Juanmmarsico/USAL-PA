@@ -15,6 +15,8 @@ import main.GUI.mainWindow.firstTimeWindow.FirstTImeWindow;
 import main.model.AbstractExpense;
 import main.model.AppRequest;
 import main.model.Expense;
+import main.model.Friend;
+import main.model.Income;
 import main.model.Owner;
 
 public class OwnwerController {
@@ -24,7 +26,9 @@ public class OwnwerController {
 	
 	public OwnwerController() {
 		// TODO Auto-generated constructor stub
-			wasRunBefore();
+		fController= new FriendController();
+//		eController = new ExpenseController("", fController);
+//		wasRunBefore();
 	}
 	private void wasRunBefore() {
 		// TODO Auto-generated method stub "./Files/owner.txt"
@@ -139,16 +143,34 @@ public class OwnwerController {
 	return owner;
 }
 	
-	public List ExpenseAndIncomeThisMonth(){
-		List list = new List(4);
-		
+	public Expense[] ExpenseThisMonth(){
+		ArrayList<AbstractExpense> devolver = new ArrayList<AbstractExpense>();
 		ArrayList<AbstractExpense> expenses = new ArrayList<AbstractExpense>(owner.getExpense());
 		Calendar month = Calendar.getInstance();
 		for (AbstractExpense abstractExpense : expenses) {
 			if(abstractExpense instanceof Expense){
-				
+				devolver.add(abstractExpense);
 			}
 		}
-		return null;
+		return  (Expense[]) devolver.toArray();
+	}
+	public Income[] IncomeThisMonth(){
+		ArrayList<AbstractExpense> devolver = new ArrayList<AbstractExpense>();
+		ArrayList<AbstractExpense> expenses = new ArrayList<AbstractExpense>(owner.getExpense());
+		Calendar month = Calendar.getInstance();
+		for (AbstractExpense abstractExpense : expenses) {
+			if(abstractExpense instanceof Income){
+				devolver.add(abstractExpense);
+			}
+		}
+		return  (Income[]) devolver.toArray();
+	}
+	
+	public Friend[] ownerFriends() {
+		return (Friend[]) owner.getFriends().toArray();
+	}
+	public void readFriends(String path) {
+		// TODO Auto-generated method stub
+		fController.readFriends(path);
 	}
 }
