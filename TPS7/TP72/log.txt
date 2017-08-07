@@ -1,0 +1,6 @@
+[Camion [patente=fdi552, fechaPatentamiento=22/2/2031, cargaMaxima=74.0] 
+, Camion [patente=nlu483, fechaPatentamiento=14/5/1909, cargaMaxima=90.0] 
+, Camion [patente=jjk149, fechaPatentamiento=3/3/1916, cargaMaxima=42.0] 
+, Camion [patente=ken333, fechaPatentamiento=30/1/2012, cargaMaxima=96.0] 
+]
+[301, 835, 766, 333, 906, 540, 854]

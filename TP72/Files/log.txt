@@ -1,0 +1,19 @@
+[Camion [patente=fhk158, fechaPatentamiento=17/4/1996, cargaMaxima=47.0] 
+, Camion [patente=max410, fechaPatentamiento=3/4/2031, cargaMaxima=49.0] 
+, Camion [patente=drs981, fechaPatentamiento=1/4/1911, cargaMaxima=24.0] 
+, Camion [patente=yhj713, fechaPatentamiento=8/2/1943, cargaMaxima=55.0] 
+, Camion [patente=lsr625, fechaPatentamiento=25/6/2031, cargaMaxima=53.0] 
+]
+[944, 455, 297, 900, 550, 350, 234]
+El numero  no se encuentra en la clase ClaseRandom, Porfavor vuelva a verificar la informacion
+944
+[Camion [patente=drs981, fechaPatentamiento=1/4/1911, cargaMaxima=24.0] 
+, Camion [patente=yhj713, fechaPatentamiento=8/2/1943, cargaMaxima=55.0] 
+, Camion [patente=fhk158, fechaPatentamiento=17/4/1996, cargaMaxima=47.0] 
+, Camion [patente=max410, fechaPatentamiento=3/4/2031, cargaMaxima=49.0] 
+, Camion [patente=lsr625, fechaPatentamiento=25/6/2031, cargaMaxima=53.0] 
+]
+false
+El numero  no se encuentra en la clase ClaseRandom, Porfavor vuelva a verificar la informacion
+[]
+[]
