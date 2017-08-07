@@ -28,8 +28,8 @@ public class MainFrame {
 	    
 	    Color background = Color.WHITE;
 	    
-	    final static Dimension INITIAL_DIMENSION = new Dimension(600,600);
-	    final static Dimension MIN_DIMENSION = new Dimension(400,200);
+	    final static Dimension INITIAL_DIMENSION = new Dimension(900,900);
+	    final static Dimension MIN_DIMENSION = new Dimension(500,300);
 	    final static Dimension LIST_DIMENSION = new Dimension(170,0);
 	    
 
@@ -48,8 +48,6 @@ public class MainFrame {
 	        mainPanel.setLayout(new BorderLayout());
 	        mainPanel.add(new JTextArea("dueno"), BorderLayout.CENTER);
 	        
-//	        mainPanel.add(buildButtonPanel(), BorderLayout.SOUTH);
-//	        mainPanel.add(buildJScrollPane(), BorderLayout.CENTER);
 
 	        return mainPanel;
 	    }
@@ -78,15 +76,17 @@ public class MainFrame {
 			// TODO Auto-generated method stub
 	    	 friendPanelList = new JPanel(new BorderLayout());
 		        JLabel friendListLabel = new JLabel("Amigos");
+		        friendPanelList.add(new JTextArea("Amigos"));
 		        friendPanelList.setBackground(Color.YELLOW);
 		        jlistFriend = new JList();
 		        jlistFriend.setPreferredSize(LIST_DIMENSION);
 		        jlistFriend.setBackground(Color.WHITE);
-//comment
 		        friendPanelList.add(friendListLabel, BorderLayout.NORTH);
-		        friendPanelList.add(jlistFriend,BorderLayout.CENTER);
+		        friendPanelList.add(jlistFriend,BorderLayout.EAST);
+		        friendPanelList.add(buildJScrollPaneExpense(), BorderLayout.CENTER);
 
-		        return expensesListPanel;
+
+		        return friendPanelList;
 		        }
 
 		private void configMainFrameLayout(BorderLayout mainFrameLayout) {
@@ -181,11 +181,17 @@ public class MainFrame {
 
 	        return buttonPanel;
 	    }
-	    private JScrollPane buildJScrollPane(){
+	    private JScrollPane buildJScrollPaneExpense(){
 	        expensesListPanel.setBackground(background);     
-	        scrollPaneExpense = new JScrollPane(expensesListPanel);
+	        scrollPaneExpense = new JScrollPane(jListExpense);
 
 	        return scrollPaneExpense;
+	    }
+	    private JScrollPane buildJScrollPaneFriend(){
+	        friendPanelList.setBackground(background);     
+	        scrollPaneFriend = new JScrollPane(jlistFriend);
+
+	        return scrollPaneFriend;
 	    }
 	    private JPanel buildExpensesListPanel() {
 	        expensesListPanel = new JPanel(new BorderLayout());
@@ -195,10 +201,13 @@ public class MainFrame {
 	        jListExpense = new JList();
 	        jListExpense.setPreferredSize(LIST_DIMENSION);
 	        jListExpense.setBackground(Color.WHITE);
+	       
 
 	        expensesListPanel.add(expensesListLabel, BorderLayout.NORTH);
 	        expensesListPanel.add(jListExpense,BorderLayout.EAST);
 
+	        expensesListPanel.add(buildJScrollPaneExpense(), BorderLayout.CENTER);
+	        
 	        return expensesListPanel;
 	    }
 	    
