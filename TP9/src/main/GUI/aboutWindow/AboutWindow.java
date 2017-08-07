@@ -14,7 +14,7 @@ public class AboutWindow {
     JFrame mainFrame;
     JPanel buttonPanel, choosePanel;
     JButton  closeButton;
-    JTextField name,version,year;
+    JTextArea name,version,year;
     ExpenseManager umlGraph;
 
 
@@ -62,8 +62,9 @@ public class AboutWindow {
     private JPanel buildComboBoxPanel() {
         choosePanel = new JPanel();
 
-        name = new JTextField("Nombre: \t ExpenseWithFriends");
-    
+        name = new JTextArea("Nombre: \t ExpenseWithFriends");
+        version = new JTextArea("Version: \t 1.0");
+        year = new JTextArea("year: \t 2017");
 
 //        classSelect.setPreferredSize(new Dimension(150,20));
 
