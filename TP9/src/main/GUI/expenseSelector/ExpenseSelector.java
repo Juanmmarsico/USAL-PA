@@ -1,5 +1,11 @@
 package main.GUI.expenseSelector;
 
-public class ExpenseSelector {
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
+public class ExpenseSelector extends JPanel{
+
+	private JPanel  incomePanelList, expensesPanel, expensesListPanel;
+	
+	
 }

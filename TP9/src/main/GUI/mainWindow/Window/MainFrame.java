@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
+import main.GUI.expenseSelector.ExpenseSelector;
 import main.control.ExpenseManager;
 import main.control.action.AboutAction;
 import main.control.action.AddFriendAction;
@@ -20,7 +21,7 @@ import main.control.action.SearchAction;
 public class MainFrame {
    
 	 	private JFrame mainFrame;
-	    private JPanel mainPanel, buttonPanel, expensesListPanel, friendPanelList, incomePanelList;
+	    private JPanel mainPanel, buttonPanel, expensesListPanel, friendPanelList, incomePanelList, expensesPanel;
 	    private JScrollPane scrollPaneExpense,scrollPaneFriend,scrollPaneIncome;
 	    private JButton addFriendButton, modifyButton, addExpenseButton;
 	    private JMenuBar menuBar;
@@ -100,7 +101,7 @@ public class MainFrame {
 		        jlistFriend.setBackground(Color.WHITE);
 		        friendPanelList.add(friendListLabel, BorderLayout.NORTH);
 		        friendPanelList.add(jlistFriend,BorderLayout.EAST);
-		        friendPanelList.add(buildJScrollPaneExpense(), BorderLayout.CENTER);
+		        friendPanelList.add(buildJScrollPaneFriend(), BorderLayout.CENTER);
 
 
 		        return friendPanelList;
@@ -217,18 +218,42 @@ public class MainFrame {
 
 	        return scrollPaneExpense;
 	    }
+	    private JScrollPane buildJScrollPaneIncome(){
+	        incomePanelList.setBackground(background);     
+	        scrollPaneIncome = new JScrollPane(jlistIncome);
+
+	        return scrollPaneExpense;
+	    }
 	    private JScrollPane buildJScrollPaneFriend(){
 	        friendPanelList.setBackground(background);     
 	        scrollPaneFriend = new JScrollPane(jlistFriend);
 
 	        return scrollPaneFriend;
 	    }
-	    private JPanel buildExpensesListPanel() {
-	        expensesListPanel = new JPanel(new BorderLayout());
-	        JLabel expensesListLabel = new JLabel("Gastos");
+	    public JPanel buildExpensesListPanel() {
+	    	ExpenseSelector expenseSelector = new ExpenseSelector();
+	    	
+//	    	expenseSelector.buildExpensesListPanel(mainFrame,expenseManager,expensesPanel,)
+	    	
+	    	String [] data = {"1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2"};
+	    	String [] data2 = {"a","b","a","b","a","b","a","b","a","b","a","b","a","b","a","b","a","b","a","b","a","b","c"};
+
+	    	
+	        expensesPanel = new ExpenseSelector();
+	    	Container container = expensesPanel;
+	        JLabel expensesListLabel = new JLabel("Gastado o Recibido");
+	        expensesPanel.add(new TextArea("panel"));
+
+	        expensesListPanel = new JPanel(null);
+	        incomePanelList = new JPanel(null);
+
+	        incomePanelList.setBounds(50, 50, 290, 220);
+	        expensesListPanel.setBounds(50, 50, 290, 220);
+
+	        
 	        expensesListPanel.add(new TextArea("expensas"));
 	        expensesListPanel.setBackground(Color.CYAN);
-	        jListExpense = new JList();
+	        jListExpense = new JList(data);
 	        jListExpense.setPreferredSize(LIST_DIMENSION);
 	        jListExpense.setBackground(Color.WHITE);
 	       
@@ -237,8 +262,26 @@ public class MainFrame {
 	        expensesListPanel.add(jListExpense,BorderLayout.EAST);
 
 	        expensesListPanel.add(buildJScrollPaneExpense(), BorderLayout.CENTER);
+	        //
 	        
-	        return expensesListPanel;
+	        incomePanelList.add(new TextArea("Income"));
+	        incomePanelList.setBackground(Color.CYAN);
+	        jlistIncome = new JList(data2);
+	        jlistIncome.setPreferredSize(LIST_DIMENSION);
+	        jlistIncome.setBackground(Color.WHITE);
+	       
+
+	        incomePanelList.add(expensesListLabel, BorderLayout.NORTH);
+	        incomePanelList.add(jlistIncome,BorderLayout.EAST);
+
+	        incomePanelList.add(buildJScrollPaneIncome(), BorderLayout.CENTER);
+	        incomePanelList.setVisible(true);
+	        expensesListPanel.setVisible(true);
+	        
+	        container.add(expensesListPanel, BorderLayout.SOUTH);
+	        container.add(incomePanelList,BorderLayout.NORTH);
+	        
+	        return expensesPanel;
 	    }
 	    
 }
