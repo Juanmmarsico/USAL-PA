@@ -1,54 +1,64 @@
 package main.model;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
 
+public class Income extends AbstractExpense {
+	private static final String [] frecuencia = {"No repetir","Dias","Semanal","Quincenal","Mensual","Bimestral","Cuatrimestral","Semestral","Anual"};
+	private static final String [] days = {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
+	private int repetitions;
+	private int [] repetitionsDays = new int [7];
 
-public class ExpenseWithFriends extends AbstractExpense {
-	private ArrayList<Friend> friendsGroup;
-	private double splitValue;
 	
-	public ExpenseWithFriends() {
+	public Income() {
 		// TODO Auto-generated constructor stub
-		friendsGroup = new ArrayList<Friend>();
-	}
-
-	public ExpenseWithFriends(ArrayList<Friend> friendsGroup, double splitValue) {
-		this.friendsGroup = friendsGroup;
-		this.splitValue = splitValue;
-	}
-
-	public ArrayList<Friend> getFriendsGroup() {
-		return friendsGroup;
-	}
-
-	public double getSplitValue() {
-		return splitValue;
-	}
-
-	public void setFriendsGroup(ArrayList<Friend> friendsGroup) {
-		this.friendsGroup = friendsGroup;
-	}
-
-	public void setSplitValue(double splitValue) {
-		this.splitValue = splitValue;
 	}
 	
-	public boolean addFriend(Friend friend){
-		return friendsGroup.add(friend);
+	public Income(int repetitions,int[] repetitionsDays,String place, double totalValue, Calendar dateOfExpense) {
+		super(place, totalValue, dateOfExpense);
+		// TODO Auto-generated constructor stub
+		this.repetitions = repetitions;
+		this.repetitionsDays =repetitionsDays;
 	}
 
-	public void removeFriend(Friend friend){
-		 friendsGroup.remove(friend);
+	public int getRepetitions() {
+		return repetitions;
 	}
+
+	public int[] getRepetitionsDays() {
+		return repetitionsDays;
+	}
+
+	public void setRepetitions(int repetitions) {
+		this.repetitions = repetitions;
+	}
+
+	public void setRepetitionsDays(int[] repetitionsDays) {
+		this.repetitionsDays = repetitionsDays;
+	}
+
+	public static String[] getFrecuencia() {
+		return frecuencia;
+	}
+
+	public static String[] getDays() {
+		return days;
+	}
+
+	@Override
+	public double availableAfterTransaction(double disponible) {
+		// TODO Auto-generated method stub
+		return disponible+totalValue;
+	}
+
+	
 	@Override
 	public String toString() {
-		String friendsString= "";
-		for (Friend friend : friendsGroup) {
-			friendsString += friend.toString();
-		}
-		return friendsString + ";" + splitValue + "\n";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return repetitions + ";" + Arrays.toString(repetitionsDays) + ";" + place + ";" + totalValue + ";"
+				+ sdf.format(dateOfExpense.getTime())  +"\n";
 	}
-	
-	
+
 	
 }

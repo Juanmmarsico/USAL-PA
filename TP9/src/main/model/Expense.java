@@ -1,48 +1,89 @@
 package main.model;
 
-public class ExpenseOrIncomingOwner extends AbstractExpense {
-	private String categoria;
-	private boolean isIncome;
-	
-	public ExpenseOrIncomingOwner() {
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+
+public class Expense extends AbstractExpense {
+	private ArrayList<Friend> friendsInTheExpense = new ArrayList<Friend>();
+	private double splitValue;
+	private boolean tieneCuotas;
+	private int cuotas = 1;
+
+	public Expense() {
 		// TODO Auto-generated constructor stub
 	}
 	
-
-	public ExpenseOrIncomingOwner(String place, double totalValue, String categoria, boolean isIncome) {
-		super(place,(isIncome?(-totalValue):(totalValue)));
-		this.categoria = categoria;
-		this.isIncome = isIncome;
+	public Expense(String place, double totalValue, Calendar dateOfExpense, double splitValue) {
+		super(place, totalValue, dateOfExpense);
+		this.splitValue = splitValue;
+	}
+	
+	public Expense(String place, double totalValue, Calendar dateOfExpense, ArrayList<Friend> friendsInTheExpense,
+			double splitValue) {
+		super(place, totalValue, dateOfExpense);
+		this.friendsInTheExpense = friendsInTheExpense;
+		this.splitValue = splitValue;
+	}
+	
+	public Expense(String place, double totalValue, Calendar dateOfExpense, ArrayList<Friend> friendsInTheExpense,
+			double splitValue, boolean tieneCuotas, int cuotas) {
+		super(place, totalValue, dateOfExpense);
+		this.friendsInTheExpense = friendsInTheExpense;
+		this.splitValue = splitValue;
+		this.tieneCuotas = tieneCuotas;
+		this.cuotas = cuotas;
 	}
 
-
-	public ExpenseOrIncomingOwner(String categoria, boolean isIncome) {
-		this.categoria = categoria;
-		this.isIncome = isIncome;
+	public ArrayList<Friend> getFriendsInTheExpense() {
+		return friendsInTheExpense;
 	}
 
-	public String getCategoria() {
-		return categoria;
+	public double getSplitValue() {
+		return splitValue;
 	}
 
-	public boolean isIncome() {
-		return isIncome;
+	public boolean isTieneCuotas() {
+		return tieneCuotas;
 	}
 
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
+	public int getCuotas() {
+		return cuotas;
 	}
 
-	public void setIncome(boolean isIncome) {
-		this.isIncome = isIncome;
+	public void setFriendsInTheExpense(ArrayList<Friend> friendsInTheExpense) {
+		this.friendsInTheExpense = friendsInTheExpense;
 	}
 
+	public void setSplitValue(double splitValue) {
+		this.splitValue = splitValue;
+	}
+
+	public void setTieneCuotas(boolean tieneCuotas) {
+		this.tieneCuotas = tieneCuotas;
+	}
+
+	public void setCuotas(int cuotas) {
+		this.cuotas = cuotas;
+	}
+
+	public void addFriend(Friend friend){
+		friendsInTheExpense.add(friend);
+	}
+	
+	@Override
+	public double availableAfterTransaction(double disponible) {
+		// TODO Auto-generated method stub
+		return disponible - totalValue;
+	}
 
 	@Override
 	public String toString() {
-		return categoria + ";" + isIncome + "\n";
+		SimpleDateFormat sDF = new SimpleDateFormat("dd/MM/yyyy");
+		return friendsInTheExpense.toString() + ";" + splitValue + ";" + tieneCuotas + ";" + cuotas + ";" + place + ";"
+				+ totalValue + ";" + sDF.format(dateOfExpense.getTime()) + "\n";
 	}
 
-
-
+	
 }

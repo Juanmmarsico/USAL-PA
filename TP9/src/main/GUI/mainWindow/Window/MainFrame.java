@@ -82,7 +82,7 @@ public class MainFrame {
 		        jlistFriend = new JList();
 		        jlistFriend.setPreferredSize(LIST_DIMENSION);
 		        jlistFriend.setBackground(Color.WHITE);
-
+//comment
 		        friendPanelList.add(friendListLabel, BorderLayout.NORTH);
 		        friendPanelList.add(jlistFriend,BorderLayout.CENTER);
 

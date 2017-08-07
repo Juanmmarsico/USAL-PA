@@ -1,0 +1,1 @@
+pedro;garcia;pedrogarcia@algo.que;0;1232345212;3000;./Files/Details/Friends.txt;
