@@ -21,13 +21,13 @@ import main.control.action.SearchAction;
 public class MainFrame {
    
 	 	private JFrame mainFrame;
-	    private JPanel mainPanel, buttonPanel, expensesListPanel, friendPanelList, incomePanelList, expensesPanel;
-	    private JScrollPane scrollPaneExpense,scrollPaneFriend,scrollPaneIncome;
+	    private JPanel mainPanel, buttonPanel, friendPanelList;
+	    private JScrollPane scrollPaneFriend;
 	    private JButton addFriendButton, modifyButton, addExpenseButton;
 	    private JMenuBar menuBar;
 	    private JMenuItem addExpense, search, about, exit, modify;
 	    private JMenu expenseMenu, fileMenu;
-	    private JList jListExpense,jlistIncome,jlistFriend;
+	    private JList jlistFriend;
 	    
 	    private ExpenseManager expenseManager;
 	    
@@ -71,7 +71,7 @@ public class MainFrame {
 	        mainFrame.add(buildFriendPanel(), BorderLayout.EAST);
 	        mainFrame.add(buildButtonPanel(), BorderLayout.SOUTH);
 
-	        configMainFrameLayout((BorderLayout) mainFrameLayout);
+//	        configMainFrameLayout((BorderLayout) mainFrameLayout);
 	        
 	        mainFrame.addWindowListener(new WindowAdapter() {
 	        	 @Override
@@ -82,6 +82,9 @@ public class MainFrame {
 	        	            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 	        	        	expenseManager.SaveAllValues();
 	        	            System.exit(0);
+	        	        }else {
+	        	        	System.out.println("estoy");
+	        	        	return;
 	        	        }
 	        	    }
 			});
@@ -96,49 +99,21 @@ public class MainFrame {
 		        JLabel friendListLabel = new JLabel("Amigos");
 		        friendPanelList.add(new JTextArea("Amigos"));
 		        friendPanelList.setBackground(Color.YELLOW);
-		        jlistFriend = new JList();
+		    	String [] data = {"1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2"};
+
+		        jlistFriend = new JList(data);
 		        jlistFriend.setPreferredSize(LIST_DIMENSION);
 		        jlistFriend.setBackground(Color.WHITE);
 		        friendPanelList.add(friendListLabel, BorderLayout.NORTH);
 		        friendPanelList.add(jlistFriend,BorderLayout.EAST);
 		        friendPanelList.add(buildJScrollPaneFriend(), BorderLayout.CENTER);
 
-
 		        return friendPanelList;
 		        }
 
-		private void configMainFrameLayout(BorderLayout mainFrameLayout) {
+//		private void configMainFrameLayout(BorderLayout mainFrameLayout) {
 //	        Container container = mainFrame.getContentPane();
-//
-//	        mainFrameLayout.add(BorderLayout.WEST, expensesListPanel,
-//	                5,
-//	                SpringLayout.WEST, container);
-//
-//	        mainFrameLayout.putConstraint(SpringLayout.NORTH, expensesListPanel,
-//	                5,
-//	                SpringLayout.NORTH, container);
-//
-//	        mainFrameLayout.putConstraint(SpringLayout.SOUTH, expensesListPanel,
-//	                5,
-//	                SpringLayout.SOUTH, container);
-//
-//	        mainFrameLayout.putConstraint(SpringLayout.WEST, mainPanel,
-//	                5,
-//	                SpringLayout.EAST, jList);
-//
-//	        mainFrameLayout.putConstraint(SpringLayout.NORTH, mainPanel,
-//	                5,
-//	                SpringLayout.NORTH, container);
-//
-//	        mainFrameLayout.putConstraint(SpringLayout.EAST, mainPanel,
-//	                5,
-//	                SpringLayout.EAST, container);
-//
-//	        mainFrameLayout.putConstraint(SpringLayout.SOUTH, mainPanel,
-//	                5,
-//	                SpringLayout.SOUTH, container);
-
-	    }
+//	    }
 	    private JMenuBar buildMenuBar() {
 	        menuBar = new JMenuBar();
 
@@ -212,76 +187,19 @@ public class MainFrame {
 
 	        return buttonPanel;
 	    }
-	    private JScrollPane buildJScrollPaneExpense(){
-	        expensesListPanel.setBackground(background);     
-	        scrollPaneExpense = new JScrollPane(jListExpense);
-
-	        return scrollPaneExpense;
-	    }
-	    private JScrollPane buildJScrollPaneIncome(){
-	        incomePanelList.setBackground(background);     
-	        scrollPaneIncome = new JScrollPane(jlistIncome);
-
-	        return scrollPaneExpense;
-	    }
+	    
 	    private JScrollPane buildJScrollPaneFriend(){
 	        friendPanelList.setBackground(background);     
 	        scrollPaneFriend = new JScrollPane(jlistFriend);
 
 	        return scrollPaneFriend;
 	    }
+	  
 	    public JPanel buildExpensesListPanel() {
 	    	ExpenseSelector expenseSelector = new ExpenseSelector();
 	    	
-//	    	expenseSelector.buildExpensesListPanel(mainFrame,expenseManager,expensesPanel,)
-	    	
-	    	String [] data = {"1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2"};
-	    	String [] data2 = {"a","b","a","b","a","b","a","b","a","b","a","b","a","b","a","b","a","b","a","b","a","b","c"};
-
-	    	
-	        expensesPanel = new ExpenseSelector();
-	    	Container container = expensesPanel;
-	        JLabel expensesListLabel = new JLabel("Gastado o Recibido");
-	        expensesPanel.add(new TextArea("panel"));
-
-	        expensesListPanel = new JPanel(null);
-	        incomePanelList = new JPanel(null);
-
-	        incomePanelList.setBounds(50, 50, 290, 220);
-	        expensesListPanel.setBounds(50, 50, 290, 220);
-
-	        
-	        expensesListPanel.add(new TextArea("expensas"));
-	        expensesListPanel.setBackground(Color.CYAN);
-	        jListExpense = new JList(data);
-	        jListExpense.setPreferredSize(LIST_DIMENSION);
-	        jListExpense.setBackground(Color.WHITE);
-	       
-
-	        expensesListPanel.add(expensesListLabel, BorderLayout.NORTH);
-	        expensesListPanel.add(jListExpense,BorderLayout.EAST);
-
-	        expensesListPanel.add(buildJScrollPaneExpense(), BorderLayout.CENTER);
-	        //
-	        
-	        incomePanelList.add(new TextArea("Income"));
-	        incomePanelList.setBackground(Color.CYAN);
-	        jlistIncome = new JList(data2);
-	        jlistIncome.setPreferredSize(LIST_DIMENSION);
-	        jlistIncome.setBackground(Color.WHITE);
-	       
-
-	        incomePanelList.add(expensesListLabel, BorderLayout.NORTH);
-	        incomePanelList.add(jlistIncome,BorderLayout.EAST);
-
-	        incomePanelList.add(buildJScrollPaneIncome(), BorderLayout.CENTER);
-	        incomePanelList.setVisible(true);
-	        expensesListPanel.setVisible(true);
-	        
-	        container.add(expensesListPanel, BorderLayout.SOUTH);
-	        container.add(incomePanelList,BorderLayout.NORTH);
-	        
-	        return expensesPanel;
+	    	JPanel devolver = expenseSelector.buildExpensesListPanel();
+	        return devolver;
 	    }
 	    
 }

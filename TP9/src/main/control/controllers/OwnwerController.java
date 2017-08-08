@@ -169,8 +169,8 @@ public class OwnwerController {
 	public Friend[] ownerFriends() {
 		return (Friend[]) owner.getFriends().toArray();
 	}
-	public void readFriends(String path) {
+	public void readFriends(File file) {
 		// TODO Auto-generated method stub
-		fController.readFriends(path);
+		fController.readFriends(file);
 	}
 }
