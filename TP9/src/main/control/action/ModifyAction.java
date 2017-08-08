@@ -2,7 +2,9 @@ package main.control.action;
 
 import java.awt.event.ActionEvent;
 
+import main.GUI.expenseSelector.ExpenseCreation;
 import main.control.ExpenseManager;
+import main.model.AbstractExpense;
 
 public class ModifyAction extends ExpenseManagerAction {
 
@@ -14,6 +16,8 @@ public class ModifyAction extends ExpenseManagerAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+		new ExpenseCreation();
 
 	}
 

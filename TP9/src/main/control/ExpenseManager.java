@@ -22,5 +22,8 @@ public void SaveAllValues() {
 	System.out.println("salvado por la campana");
 }
 
+public void updateFriendPanelList() {
+	mainFrame.updateFriendList();
+}
 
 }

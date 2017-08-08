@@ -23,7 +23,7 @@ public class test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-MainFrame mainFrame = new MainFrame();
+			MainFrame mainFrame = new MainFrame();
 //		
 //		ArrayList<String> algo = new ArrayList<String>();
 //		algo.add("algo");

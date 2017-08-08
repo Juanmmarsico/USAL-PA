@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.TextArea;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 
 public class ExpenseSelector extends JPanel{
@@ -67,6 +69,21 @@ public class ExpenseSelector extends JPanel{
         incomePanelList.add(buildJScrollPaneIncome(), BorderLayout.CENTER);
         incomePanelList.setVisible(true);
         expensesListPanel.setVisible(true);
+        
+        jListExpense.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				jlistIncome.clearSelection();
+			}
+		});
+        jlistIncome.addListSelectionListener(new ListSelectionListener() {			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				jListExpense.clearSelection();
+			}
+		});
         
         container.add(expensesListPanel, BorderLayout.SOUTH);
         container.add(incomePanelList,BorderLayout.NORTH);

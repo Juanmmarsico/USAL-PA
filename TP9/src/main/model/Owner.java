@@ -12,7 +12,7 @@ public class Owner {
 	private String name;
 	private String lastName;
 	private ArrayList<AbstractExpense> expenses;
-	private ArrayList<Friend> friends;
+	private ArrayList<Friend> friends = new ArrayList<Friend>();
 	private AppRequest appRequest;
 	private double disponible;
 	private double gastado;
@@ -20,6 +20,7 @@ public class Owner {
 	
 	public Owner(long id, String name, String lastName, ArrayList<AbstractExpense> expenseWithFriends,
 			ArrayList<Friend> friends, AppRequest appRequest, double disponible, double gastado) {
+		this();
 	this.id = id;
 		this.name = name;
 		this.lastName = lastName;

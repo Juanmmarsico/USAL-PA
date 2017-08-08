@@ -37,8 +37,9 @@ public class AddFriendAction extends ExpenseManagerAction{
 
 		        if (returnVal == JFileChooser.APPROVE_OPTION) {
 		            File file = fileChooser.getSelectedFile();
-		        	expenseManager.getOwnwerController().readFriends(file);			
-
+		        	expenseManager.getOwnwerController().readFriends(file);		
+		        	expenseManager.updateFriendPanelList();
+		        	System.out.println(expenseManager.getOwnwerController().getOwner().getFriends());
 		        } else {
 		        	return;
 		        }	

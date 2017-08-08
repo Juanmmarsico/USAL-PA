@@ -13,7 +13,6 @@ import main.model.Friend;
 public class FriendController {
 	OwnwerController ownwerController;
 		String friendPath;
-		int id = 0;
 		
 		public FriendController() {
 			// TODO Auto-generated constructor stub
@@ -24,6 +23,9 @@ public class FriendController {
 			readFriends();
 		}
 		
+		public void setOwnwerController(OwnwerController ownwerController) {
+			this.ownwerController = ownwerController;
+		}
 	private ArrayList<Friend> readFriends() {
 			// TODO Auto-generated method stub
 			ArrayList<Friend> friends = new ArrayList<Friend>();
@@ -31,16 +33,22 @@ public class FriendController {
 				Scanner scanner = new Scanner(new File(friendPath));
 				while (scanner.hasNextLine()){
 					String [] strings = scanner.nextLine().split(";");
-					String mail=strings[4];
-					long celNumber = Long.parseLong(strings[5].length()==0?"0":strings[5]);
-					String name =strings[1];
-					String lastName= strings[2];
-					boolean adeuda =Boolean.parseBoolean(strings[3]);
-					if (mail.length()==0) {
-						addFriend(id, name, lastName, adeuda);
-					}else{
-						addFriend(mail, id, celNumber, name, lastName, adeuda);
+					if (strings.length <= 3) {
+						String name =strings[0];
+						String lastName= strings[1];
+						double adeuda =Double.parseDouble(strings[2]);
+						addFriend(name, lastName, adeuda);
+
+					}else {
+					String mail=strings[3];
+					long celNumber = Long.parseLong(strings[5].length()==0?"0":strings[4]);
+					String name =strings[0];
+					String lastName= strings[1];
+					double adeuda =Double.parseDouble(strings[2]);
+					addFriend(mail, celNumber, name, lastName, adeuda);
+
 					}
+					
 				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -60,16 +68,16 @@ public class FriendController {
 			e.printStackTrace();
 		}
 	}
-	public void addFriend (String mail, int id, long celNumber, String name, String lastName,boolean adeuda){
-//		ownwerController.getOwner().AddFriend(new Friend(mail, id, celNumber, name, lastName,adeuda));
-		id++;
+	public void addFriend (String mail, long celNumber, String name, String lastName,double adeuda){
+		ownwerController.getOwner().AddFriend(new Friend(mail, celNumber, name, lastName,adeuda));
 	}
-	public void addFriend (int id, String name, String lastName, boolean adeuda){
-//	ownwerController.getOwner().AddFriend(new Friend(id,name, lastName,adeuda));
-	id++;
+	public void addFriend (String name, String lastName, double adeuda){
+	ownwerController.getOwner().AddFriend(new Friend(name, lastName,adeuda));
 	}
 	public void readFriends(File file) {
 		// TODO Auto-generated method stub
 		System.out.println(file.getName());
+		friendPath = file.getPath();
+		readFriends();
 	}
 }

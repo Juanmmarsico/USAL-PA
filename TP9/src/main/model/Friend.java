@@ -6,7 +6,8 @@ public class Friend {
 	private String lastName;
 	private AppRequest appRequest;
 	private double adeuda;
-	private static int id;
+	private static int counter = 0;
+	private int id;
 	private boolean hasChange = false;
 
 	
@@ -25,7 +26,8 @@ public class Friend {
 	}
 	public Friend() {
 		// TODO Auto-generated constructor stub
-		id ++;
+		id=counter;
+		counter ++;
 	}
 	public AppRequest getAppRequest() {
 		return appRequest;
@@ -36,8 +38,17 @@ public class Friend {
 	public String getLastName() {
 		return lastName;
 	}
-	public void setAppRequest(String mail, long id, long celNumber) {
+	public void setAppRequest(String mail, long celNumber) {
 		this.appRequest = new AppRequest(mail, celNumber);
+	}
+	public static int getCounter() {
+		return counter;
+	}
+	public static void setCounter(int counter) {
+		Friend.counter = counter;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -64,15 +75,19 @@ public class Friend {
 
 	@Override
 	public String toString() {
-		if(appRequest.equals(null)){
+		try {
+			return  counter + ";" 
+					+name + ";" 
+					+ lastName + ";"
+					+  adeuda  + ";"
+					+ appRequest.toString()
+					 + "\n";
+		} catch (NullPointerException e) {
+			// TODO: handle exception
 			return  id +";" +name + ";" + lastName+ adeuda  + " ;" + " ;"+ " ;"  + "\n";
+
 		}
-		return  id + ";" 
-		+name + ";" 
-		+ lastName + ";"
-		+  adeuda  + ";"
-		+ appRequest.toString()
-		 + "\n";
+		
 	}
 	
 	

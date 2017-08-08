@@ -26,7 +26,10 @@ public class OwnwerController {
 	
 	public OwnwerController() {
 		// TODO Auto-generated constructor stub
+		owner =  new Owner(0, "AD", "ASD", new AppRequest("algo", 456456456), 2);
 		fController= new FriendController();
+		fController.setOwnwerController(this);
+		
 //		eController = new ExpenseController("", fController);
 //		wasRunBefore();
 	}
@@ -167,7 +170,7 @@ public class OwnwerController {
 	}
 	
 	public Friend[] ownerFriends() {
-		return (Friend[]) owner.getFriends().toArray();
+		return owner.getFriends().toArray(new Friend[owner.getFriends().size()]);
 	}
 	public void readFriends(File file) {
 		// TODO Auto-generated method stub

@@ -17,6 +17,7 @@ import main.control.action.AddFriendAction;
 import main.control.action.IngressIncomeOrExpenseAction;
 import main.control.action.ModifyAction;
 import main.control.action.SearchAction;
+import main.model.Friend;
 
 public class MainFrame {
    
@@ -28,6 +29,7 @@ public class MainFrame {
 	    private JMenuItem addExpense, search, about, exit, modify;
 	    private JMenu expenseMenu, fileMenu;
 	    private JList jlistFriend;
+	    private DefaultListModel<Friend> friendModel;
 	    
 	    private ExpenseManager expenseManager;
 	    
@@ -99,9 +101,15 @@ public class MainFrame {
 		        JLabel friendListLabel = new JLabel("Amigos");
 		        friendPanelList.add(new JTextArea("Amigos"));
 		        friendPanelList.setBackground(Color.YELLOW);
-		    	String [] data = {"1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2"};
+		    	
+		    	friendModel= new DefaultListModel<Friend>();
+		    	
+				    	
+		    	updateFriendList();
+		    	expenseManager.getOwnwerController().getOwner().addFriend(new Friend("Carlos", "antonio", 212));
+		    	friendModel.addElement(expenseManager.getOwnwerController().getOwner().getFriends().get(0));
 
-		        jlistFriend = new JList(data);
+
 		        jlistFriend.setPreferredSize(LIST_DIMENSION);
 		        jlistFriend.setBackground(Color.WHITE);
 		        friendPanelList.add(friendListLabel, BorderLayout.NORTH);
@@ -202,4 +210,13 @@ public class MainFrame {
 	        return devolver;
 	    }
 	    
+	    public void updateFriendList() {
+	    	if (expenseManager.getOwnwerController().getOwner().getFriends().size()>0) {
+	    		friendModel.removeAllElements();
+	    		for (Friend f : expenseManager.getOwnwerController().ownerFriends()) {
+			    	friendModel.addElement(f);
+				}
+			}
+	        jlistFriend = new JList<Friend>(friendModel);	  
+	        }
 }
