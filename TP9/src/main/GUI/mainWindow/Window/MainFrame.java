@@ -48,6 +48,7 @@ public class MainFrame {
 	        mainFrame.setVisible(true);
 	        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+	        mainFrame.pack();
 	    }
 	    
 	    private JPanel buildMainPanel() {
@@ -68,7 +69,8 @@ public class MainFrame {
 	        LayoutManager mainFrameLayout = new BorderLayout();
 	        mainFrame.setLayout(mainFrameLayout);
 	        mainFrame.setJMenuBar(buildMenuBar());
-	        mainFrame.add(buildExpensesListPanel(),BorderLayout.WEST);
+//	        mainFrame.add(buildExpensesListPanel(),BorderLayout.WEST);
+	        buildExpensesListPanel();
 	        mainFrame.add(buildMainPanel(),BorderLayout.CENTER);
 	        mainFrame.add(buildFriendPanel(), BorderLayout.EAST);
 	        mainFrame.add(buildButtonPanel(), BorderLayout.SOUTH);
@@ -93,6 +95,7 @@ public class MainFrame {
 
 	        mainFrame.pack();
 
+	        mainFrame.repaint();
 	        return mainFrame;
 	    }
 	    private JPanel buildFriendPanel() {
@@ -106,8 +109,8 @@ public class MainFrame {
 		    	
 				    	
 		    	updateFriendList();
-		    	expenseManager.getOwnwerController().getOwner().addFriend(new Friend("Carlos", "antonio", 212));
-		    	friendModel.addElement(expenseManager.getOwnwerController().getOwner().getFriends().get(0));
+//		    	expenseManager.getOwnwerController().getOwner().addFriend(new Friend("Carlos", "antonio", 212));
+//		    	friendModel.addElement(expenseManager.getOwnwerController().getOwner().getFriends().get(0));
 
 
 		        jlistFriend.setPreferredSize(LIST_DIMENSION);
@@ -203,11 +206,10 @@ public class MainFrame {
 	        return scrollPaneFriend;
 	    }
 	  
-	    public JPanel buildExpensesListPanel() {
-	    	ExpenseSelector expenseSelector = new ExpenseSelector();
-	    	
-	    	JPanel devolver = expenseSelector.buildExpensesListPanel();
-	        return devolver;
+	    public JFrame buildExpensesListPanel() {
+	    	ExpenseSelector expenseSelector = new ExpenseSelector(expenseManager);	
+	    	expenseSelector.setVisible(true);
+	        return expenseSelector;
 	    }
 	    
 	    public void updateFriendList() {

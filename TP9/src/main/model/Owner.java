@@ -132,7 +132,7 @@ public class Owner {
 		this.id = id;
 	}
 		
-	public void addIncome(int repetition,int [] repetitionsDays,String place, double totalValue, Calendar dateOfExpense, int repetitions){
+	public void addIncome(int repetition,int [] repetitionsDays,String place, double totalValue, Calendar dateOfExpense){
 		switch (repetition) {
 		case 0:
 			expenses.add(new Income(repetition,repetitionsDays,place, totalValue, dateOfExpense));

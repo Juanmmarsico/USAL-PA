@@ -155,7 +155,7 @@ public class OwnwerController {
 				devolver.add(abstractExpense);
 			}
 		}
-		return  (Expense[]) devolver.toArray();
+		return  devolver.toArray(new Expense[owner.getExpense().size()]);
 	}
 	public Income[] IncomeThisMonth(){
 		ArrayList<AbstractExpense> devolver = new ArrayList<AbstractExpense>();
@@ -166,7 +166,7 @@ public class OwnwerController {
 				devolver.add(abstractExpense);
 			}
 		}
-		return  (Income[]) devolver.toArray();
+		return   devolver.toArray(new Income[owner.getExpense().size()]);
 	}
 	
 	public Friend[] ownerFriends() {
