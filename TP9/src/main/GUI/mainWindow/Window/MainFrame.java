@@ -9,8 +9,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 import main.GUI.expenseSelector.ExpenseSelector;
+import main.GUI.tableModel.FriendTableModel;
 import main.control.ExpenseManager;
 import main.control.action.AboutAction;
 import main.control.action.AddFriendAction;
@@ -28,8 +33,8 @@ public class MainFrame {
 	    private JMenuBar menuBar;
 	    private JMenuItem addExpense, search, about, exit, modify;
 	    private JMenu expenseMenu, fileMenu;
-	    private JList jlistFriend;
-	    private DefaultListModel<Friend> friendModel;
+	    private JTable jlistFriend;
+	    private FriendTableModel friendModel;
 	    
 	    private ExpenseManager expenseManager;
 	    
@@ -105,7 +110,7 @@ public class MainFrame {
 		        friendPanelList.add(new JTextArea("Amigos"));
 		        friendPanelList.setBackground(Color.YELLOW);
 		    	
-		    	friendModel= new DefaultListModel<Friend>();
+		    	friendModel= new FriendTableModel(expenseManager);
 		    	
 				    	
 		    	updateFriendList();
@@ -214,11 +219,13 @@ public class MainFrame {
 	    
 	    public void updateFriendList() {
 	    	if (expenseManager.getOwnwerController().getOwner().getFriends().size()>0) {
-	    		friendModel.removeAllElements();
+	    	
 	    		for (Friend f : expenseManager.getOwnwerController().ownerFriends()) {
-			    	friendModel.addElement(f);
+//			    	friendModel.add(f);
+	    			
 				}
 			}
-	        jlistFriend = new JList<Friend>(friendModel);	  
+	        jlistFriend = new JTable();	 
+	        jlistFriend.setModel(friendModel);
 	        }
 }
