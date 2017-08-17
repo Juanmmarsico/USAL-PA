@@ -52,12 +52,60 @@ public class Income extends AbstractExpense {
 		return disponible+totalValue;
 	}
 
+	public boolean Search(String query){
+		for (String string : categoria) {
+			if (string.contains(query)) {
+				return true;
+			}
+		}
+		for (String string : subcategoria) {
+			if (string.contains(query)) {
+				return true;
+			}
+		}
+		
+		String totalValue = "" + getTotalValue();
+		if (totalValue.contains(query)) {
+			return true;
+		}
+		if (place.contains(query)) {
+			return true;
+		}	
+		return false;
+	}
+	
+	public String writeDocument() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return repetitions + ";" + Arrays.toString(repetitionsDays) + ";" + place + ";" + totalValue + ";"
+				+ sdf.format(dateOfExpense.getTime())  +"\n";
+	}
 	
 	@Override
 	public String toString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		return repetitions + ";" + Arrays.toString(repetitionsDays) + ";" + place + ";" + totalValue + ";"
+		return "" + Arrays.toString(repetitionsDays) + " " + place + " " + totalValue + " "
 				+ sdf.format(dateOfExpense.getTime())  +"\n";
+	}
+
+	public boolean Search(String lugar, String precio) {
+		// TODO Auto-generated method stub
+		
+		boolean l = place.contains(lugar);
+		boolean p = false;
+			String totalValue = "" + getTotalValue();
+			if (totalValue.contains(precio)) {
+				p= true;
+			}
+		
+			if (lugar.equals("") && !precio.equals("")) {
+				l=p;
+			}
+			if (!lugar.equals("") && precio.equals("")) {
+				p=l;
+			}
+		
+		
+		return l || p;
 	}
 
 	

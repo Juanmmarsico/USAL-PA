@@ -11,6 +11,7 @@ OwnwerController ownwerController;
 public ExpenseManager(MainFrame mainFrame){
     this.mainFrame = mainFrame;
     ownwerController = new OwnwerController();
+    ownwerController.readAll();
 }
 
 public OwnwerController getOwnwerController() {
@@ -19,11 +20,17 @@ public OwnwerController getOwnwerController() {
 
 public void SaveAllValues() {
 	// TODO Auto-generated method stub
-	System.out.println("salvado por la campana");
+	
+	ownwerController.writeFiles();
 }
 
 public void updateFriendPanelList() {
 	mainFrame.updateFriendList();
 }
+
+public MainFrame getMainFrame() {
+	return mainFrame;
+}
+ 
 
 }

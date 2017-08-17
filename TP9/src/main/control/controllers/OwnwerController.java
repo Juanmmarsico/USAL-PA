@@ -1,6 +1,5 @@
 package main.control.controllers;
 
-import java.awt.List;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -9,7 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
+
+import javax.swing.ComboBoxModel;
 
 import main.GUI.mainWindow.firstTimeWindow.FirstTImeWindow;
 import main.model.AbstractExpense;
@@ -30,7 +32,8 @@ public class OwnwerController {
 		fController= new FriendController();
 		fController.setOwnwerController(this);
 		
-//		eController = new ExpenseController("", fController);
+		eController = new ExpenseController(this,fController);
+		
 //		wasRunBefore();
 	}
 	private void wasRunBefore() {
@@ -122,6 +125,7 @@ public class OwnwerController {
 			e.printStackTrace();
 		}
 	}
+	
 	public void createOwnerFile(String name, String lastName,String mail, long id, long celNumber, double disponible,String friendPath,String expensePath){
 		File file = new File("./Files/owner.txt");
 		
@@ -146,34 +150,73 @@ public class OwnwerController {
 	return owner;
 }
 	
-	public Expense[] ExpenseThisMonth(){
-		ArrayList<AbstractExpense> devolver = new ArrayList<AbstractExpense>();
+	public List<Expense> ExpenseThisMonth(){
+		List<Expense> devolver = new ArrayList<Expense>();
 		ArrayList<AbstractExpense> expenses = new ArrayList<AbstractExpense>(owner.getExpense());
-		Calendar month = Calendar.getInstance();
 		for (AbstractExpense abstractExpense : expenses) {
 			if(abstractExpense instanceof Expense){
-				devolver.add(abstractExpense);
+				if (((Expense)abstractExpense).getDateOfExpense().get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) && ((Expense)abstractExpense).getDateOfExpense().get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)) {
+					devolver.add((Expense)abstractExpense);
+				}
 			}
 		}
-		return  devolver.toArray(new Expense[owner.getExpense().size()]);
+		return devolver;
 	}
-	public Income[] IncomeThisMonth(){
-		ArrayList<AbstractExpense> devolver = new ArrayList<AbstractExpense>();
+	public List<Income> IncomeThisMonth(){
+		List<Income> devolver = new ArrayList<Income>();
 		ArrayList<AbstractExpense> expenses = new ArrayList<AbstractExpense>(owner.getExpense());
-		Calendar month = Calendar.getInstance();
 		for (AbstractExpense abstractExpense : expenses) {
 			if(abstractExpense instanceof Income){
-				devolver.add(abstractExpense);
+				if (((Income)abstractExpense).getDateOfExpense().get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) && ((Income)abstractExpense).getDateOfExpense().get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)) {
+					devolver.add((Income)abstractExpense);
+				}
 			}
 		}
-		return   devolver.toArray(new Income[owner.getExpense().size()]);
+		return   devolver;
 	}
 	
-	public Friend[] ownerFriends() {
-		return owner.getFriends().toArray(new Friend[owner.getFriends().size()]);
+	public List<Friend> ownerFriends() {
+		return owner.getFriends();
 	}
 	public void readFriends(File file) {
 		// TODO Auto-generated method stub
 		fController.readFriends(file);
 	}
+	
+	public List<AbstractExpense> searchAllExpense(String query){
+		
+		return owner.searchAllExpense(query);
+	}
+	public List<Friend> searchAllFriend(String query){
+		return owner.searchAllFriend(query);
+		}
+	public List<AbstractExpense> searchAllExpense(String text, String text2) {
+		// TODO Auto-generated method stub
+		return owner.searchAllExpense(text,text2);
+	}
+	public void writeFiles() {
+		// TODO Auto-generated method stub
+		fController.writeFriends();
+		eController.writeExpense();
+		
+	}
+	public List<String[]> leerCalendar() {
+		// TODO Auto-generated method stub
+		return eController.leerCalendar();
+		
+	}
+	public double getDisponibleToDisplay() {
+		// TODO Auto-generated method stub	
+		return owner.getDisponible();
+	}
+	public double getGastadoToDisplay() {
+		// TODO Auto-generated method stub
+		return owner.getGastado();
+	}
+	public void readAll() {
+		// TODO Auto-generated method stub
+		fController.readFriends(new File("./Files/Friends.txt"));
+		eController.readExpenses();
+	}
+
 }

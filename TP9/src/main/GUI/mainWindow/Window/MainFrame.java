@@ -22,6 +22,7 @@ import main.control.action.AddFriendAction;
 import main.control.action.IngressIncomeOrExpenseAction;
 import main.control.action.ModifyAction;
 import main.control.action.SearchAction;
+import main.model.AbstractExpense;
 import main.model.Friend;
 
 public class MainFrame {
@@ -35,36 +36,77 @@ public class MainFrame {
 	    private JMenu expenseMenu, fileMenu;
 	    private JTable jlistFriend;
 	    private FriendTableModel friendModel;
+	    private ExpenseSelector expenseSelector;
+	    private JTextArea ownerAmountDisp,gastado;
 	    
 	    private ExpenseManager expenseManager;
 	    
 	    Color background = Color.WHITE;
 	    
-	    final static Dimension INITIAL_DIMENSION = new Dimension(900,900);
-	    final static Dimension MIN_DIMENSION = new Dimension(500,300);
+	    final static Dimension INITIAL_DIMENSION = new Dimension(700,700);
+	    final static Dimension MIN_DIMENSION = new Dimension(300,200);
 	    final static Dimension LIST_DIMENSION = new Dimension(170,0);
 	    
+	    
+	    public JFrame getMainFrame() {
+			return mainFrame;
+		}
+	    public ExpenseManager getExpenseManager() {
+			return expenseManager;
+		}
 
 	    public MainFrame() {
 	        expenseManager = new ExpenseManager(this);
 
 	        buildMainFrame();
+	        
+	        expenseSelector.updateExpenseOrIncomeList();
+			updateFriendList();
+			changeColor();
+	        repaint();
+	        
 	        mainFrame.setLocationRelativeTo(null);
 	        mainFrame.setVisible(true);
 	        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
 	        mainFrame.pack();
 	    }
 	    
 	    private JPanel buildMainPanel() {
 	        mainPanel = new JPanel();
 	        mainPanel.setLayout(new BorderLayout());
-	        mainPanel.add(new JTextArea("dueno"), BorderLayout.CENTER);
 	        
+//	        mainPanel.add(new JTextArea("dueno"), BorderLayout.NORTH);
+	        ownerAmountDisp =  new JTextArea();
 
+	       
+	        ownerAmountDisp.setEditable(false);
+	        ownerAmountDisp.setMinimumSize(new Dimension(100, 200));
+	        
+	        mainPanel.add(ownerAmountDisp,BorderLayout.EAST);
+	       
+	        gastado =  new JTextArea();
+
+	
+	        gastado.setEditable(false);
+	        gastado.setMinimumSize(new Dimension(100, 200));
+
+	        
+	        mainPanel.add(gastado,BorderLayout.WEST);
 	        return mainPanel;
 	    }
-	    
+	    public void changeColor(){
+	    	 double dispo = expenseManager.getOwnwerController().getDisponibleToDisplay();
+		        String dispoS =""+dispo;
+		        ownerAmountDisp.setBackground(dispo>=0?Color.GREEN:Color.RED);
+		        ownerAmountDisp.setText(dispoS);
+		        
+		        double gast = expenseManager.getOwnwerController().getGastadoToDisplay();
+		        String gastS =""+gast;
+		        gastado.setBackground(gast>=100?Color.GREEN:Color.RED);
+		        gastado.setText(gastS);
+
+	    }
 	    private JFrame buildMainFrame() {
 	        mainFrame = new JFrame("GASTE?");
 
@@ -80,7 +122,6 @@ public class MainFrame {
 	        mainFrame.add(buildFriendPanel(), BorderLayout.EAST);
 	        mainFrame.add(buildButtonPanel(), BorderLayout.SOUTH);
 
-//	        configMainFrameLayout((BorderLayout) mainFrameLayout);
 	        
 	        mainFrame.addWindowListener(new WindowAdapter() {
 	        	 @Override
@@ -111,18 +152,19 @@ public class MainFrame {
 		        friendPanelList.setBackground(Color.YELLOW);
 		    	
 		    	friendModel= new FriendTableModel(expenseManager);
-		    	
-				    	
+
+		        
+		        jlistFriend = new JTable(friendModel);		
+		        jlistFriend.setFillsViewportHeight(true);
+		        jlistFriend.setShowHorizontalLines(true);
+		        jlistFriend.setShowVerticalLines(false);
+
+		        JScrollPane scrollPaneFriend = new JScrollPane(jlistFriend);
+		        
 		    	updateFriendList();
-//		    	expenseManager.getOwnwerController().getOwner().addFriend(new Friend("Carlos", "antonio", 212));
-//		    	friendModel.addElement(expenseManager.getOwnwerController().getOwner().getFriends().get(0));
 
-
-		        jlistFriend.setPreferredSize(LIST_DIMENSION);
-		        jlistFriend.setBackground(Color.WHITE);
 		        friendPanelList.add(friendListLabel, BorderLayout.NORTH);
-		        friendPanelList.add(jlistFriend,BorderLayout.EAST);
-		        friendPanelList.add(buildJScrollPaneFriend(), BorderLayout.CENTER);
+		        friendPanelList.add(scrollPaneFriend,BorderLayout.EAST);
 
 		        return friendPanelList;
 		        }
@@ -174,10 +216,12 @@ public class MainFrame {
 	        expenseMenu.add(addExpense);
 	
 	        search = new JMenuItem("Busqueda Masiva");
+	        search.setActionCommand("consultaMasiva");
 	        search.addActionListener(new SearchAction(expenseManager));
 	        expenseMenu.add(search);
 	        
 	        modify = new JMenuItem("Consulta y Actualizacion");
+	        modify.setActionCommand("consulta");
 	        modify.addActionListener(new SearchAction(expenseManager));
 	        expenseMenu.add(modify);
 
@@ -200,32 +244,46 @@ public class MainFrame {
 	        modifyButton.addActionListener(new ModifyAction(expenseManager));
 	        buttonPanel.add(modifyButton, BorderLayout.EAST);
 
+	        JButton save = new JButton("Guardar Todo");
+	        save.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					expenseManager.SaveAllValues();
+				}
+			});
+	        buttonPanel.add(save, BorderLayout.SOUTH);
 
 	        return buttonPanel;
 	    }
 	    
-	    private JScrollPane buildJScrollPaneFriend(){
-	        friendPanelList.setBackground(background);     
-	        scrollPaneFriend = new JScrollPane(jlistFriend);
-
-	        return scrollPaneFriend;
-	    }
 	  
 	    public JFrame buildExpensesListPanel() {
-	    	ExpenseSelector expenseSelector = new ExpenseSelector(expenseManager);	
+	    	expenseSelector = new ExpenseSelector(expenseManager);	
 	    	expenseSelector.setVisible(true);
 	        return expenseSelector;
 	    }
 	    
 	    public void updateFriendList() {
-	    	if (expenseManager.getOwnwerController().getOwner().getFriends().size()>0) {
-	    	
-	    		for (Friend f : expenseManager.getOwnwerController().ownerFriends()) {
-//			    	friendModel.add(f);
-	    			
-				}
+	    	if (expenseManager.getOwnwerController().getOwner().getFriends().size()>0) {    	
+	    		friendModel = new FriendTableModel(expenseManager,expenseManager.getOwnwerController().searchAllFriend(""));
+	    		jlistFriend.setModel(friendModel);
+	    		jlistFriend.repaint();
 			}
-	        jlistFriend = new JTable();	 
-	        jlistFriend.setModel(friendModel);
+	    	friendPanelList.repaint();
 	        }
+
+		public void Consulta() {
+			// TODO Auto-generated method stub
+			expenseSelector.consulta();
+		}
+
+		public void repaint() {
+			// TODO Auto-generated method stub
+			mainFrame.repaint();
+		}
+		public JList<AbstractExpense> seleccionado(){
+			return expenseSelector.getSeleccionado();
+		}
 }

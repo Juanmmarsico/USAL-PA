@@ -1,22 +1,28 @@
 package main.GUI.expenseSelector;
 
 
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+
+import javax.swing.*;
 
 import main.control.ExpenseManager;
 import main.model.Friend;
 
-public class ExpenseCreation extends JOptionPane{
+public class ExpenseCreation extends JFrame{
 	
 	private JList<Friend> friends;
 	private DefaultListModel<Friend> friendsModel;
     private ExpenseManager expenseManager;
+	private JTextField amountField,placeField;
+	private JRadioButton expenseOrIncome;
+	private JComboBox<String> categorias;
+	
     private JPanel panel;
-    private JTextArea textArea;
+    
+    public ExpenseCreation(ExpenseManager expenseManager) {
+		// TODO Auto-generated constructor stub
+    	this.expenseManager =expenseManager;
+	}
+
     
     
 

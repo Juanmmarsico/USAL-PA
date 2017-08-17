@@ -3,6 +3,7 @@ package main.control.action;
 import java.awt.event.ActionEvent;
 
 import main.GUI.expenseSelector.ExpenseCreation;
+import main.GUI.expenseSelector.ExpenseModify;
 import main.control.ExpenseManager;
 
 public class IngressIncomeOrExpenseAction extends ExpenseManagerAction{
@@ -14,9 +15,8 @@ public class IngressIncomeOrExpenseAction extends ExpenseManagerAction{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-		new ExpenseCreation();
+		// TODO Auto-generated method stub		
+		new ExpenseModify(expenseManager);
 		
 	}
 

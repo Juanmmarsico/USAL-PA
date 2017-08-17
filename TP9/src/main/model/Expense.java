@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import main.control.action.SearchAction;
+
 
 public class Expense extends AbstractExpense {
 	private ArrayList<Friend> friendsInTheExpense = new ArrayList<Friend>();
@@ -78,12 +80,66 @@ public class Expense extends AbstractExpense {
 		return disponible - totalValue;
 	}
 
-	@Override
-	public String toString() {
+	public boolean Search(String query){
+		for (String string : categoria) {
+			if (string.contains(query)) {
+				return true;
+			}
+		}
+		for (String string : subcategoria) {
+			if (string.contains(query)) {
+				return true;
+			}
+		}
+		for(Friend friends: friendsInTheExpense){
+			if (friends.search(query)) {
+				return true;
+			}
+		}
+		String cuotaStr = "" + cuotas;
+		if (cuotaStr.contains(query)) {
+			return true;
+		}
+		String totalValue = "" + getTotalValue();
+		if (totalValue.contains(query)) {
+			return true;
+		}
+		if (place.contains(query)) {
+			return true;
+		}	
+		return false;
+	}
+	
+	public String writeDocument() {
 		SimpleDateFormat sDF = new SimpleDateFormat("dd/MM/yyyy");
 		return friendsInTheExpense.toString() + ";" + splitValue + ";" + tieneCuotas + ";" + cuotas + ";" + place + ";"
 				+ totalValue + ";" + sDF.format(dateOfExpense.getTime()) + "\n";
 	}
+	@Override
+	public String toString() {
+		SimpleDateFormat sDF = new SimpleDateFormat("dd/MM/yyyy");
+		return "" + " "+cuotas +" "+ place
+				+" "+ totalValue +" "+ sDF.format(dateOfExpense.getTime()) + "\n";
+	}
 
+	public boolean Search(String lugar, String precio) {
+		// TODO Auto-generated method stub
+		boolean l = place.contains(lugar);
+		boolean p = false;
+			String totalValue = "" + getTotalValue();
+			if (totalValue.contains(precio)) {
+				p= true;
+			}
+		
+			if (lugar.equals("") && !precio.equals("")) {
+				l=p;
+			}
+			if (!lugar.equals("") && precio.equals("")) {
+				p=l;
+			}
+		
+		
+		return l || p;
+	}
 	
 }

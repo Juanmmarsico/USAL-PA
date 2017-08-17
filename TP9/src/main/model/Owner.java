@@ -2,8 +2,7 @@ package main.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import main.control.action.AddFriendAction;
+import java.util.List;
 
 
 public class Owner {
@@ -133,12 +132,13 @@ public class Owner {
 	}
 		
 	public void addIncome(int repetition,int [] repetitionsDays,String place, double totalValue, Calendar dateOfExpense){
+		disponible+=totalValue;
 		switch (repetition) {
 		case 0:
 			expenses.add(new Income(repetition,repetitionsDays,place, totalValue, dateOfExpense));
 			break;
 		case 1:
-			
+			expenses.add(new Income(repetition,repetitionsDays,place, totalValue, dateOfExpense));
 			break;
 		case 2:
 			for (int i = 0; i < repetition; i++) {
@@ -184,12 +184,16 @@ public class Owner {
 
 	public  void addExpense(String place, double totalValue, Calendar dateOfExpense, double splitValue) {
 		// TODO Auto-generated method stub
+		gastado+=totalValue;
+		disponible-= totalValue;
 		expenses.add(new Expense(place, totalValue, dateOfExpense, splitValue));
 		
 	}
 	public  void addExpense(String place, double totalValue, Calendar dateOfExpense, ArrayList<Friend> friendsInTheExpense,
 			double splitValue) {
 		// TODO Auto-generated method stub
+		gastado+=splitValue;
+		disponible-=splitValue;
 		expenses.add(new Expense(place, totalValue, dateOfExpense, friendsInTheExpense, splitValue));
 
 	}
@@ -199,6 +203,8 @@ public class Owner {
 		for (int i = 0; i < cuotas; i++) {
 			dateOfExpense.add(Calendar.MONTH, i);
 			expenses.add(new Expense(place, totalValue, dateOfExpense, friendsInTheExpense, splitValue, tieneCuotas, cuotas));
+			gastado+=splitValue/cuotas;
+			disponible-=splitValue/cuotas;
 		}
 
 	}
@@ -210,8 +216,33 @@ public class Owner {
 		friends.add(new Friend(name, lastName, 0));
 	}
 	
-	@Override
-	public String toString() {
+	public List<AbstractExpense> searchAllExpense(String query){
+		List<AbstractExpense> expensesOrIncome = new ArrayList<AbstractExpense>();
+		for (AbstractExpense abstractExpense : expenses) {
+			if (abstractExpense instanceof Income) {
+				if (((Income)abstractExpense).Search(query)) {
+					expensesOrIncome.add(abstractExpense);
+				}
+			}
+			if (abstractExpense instanceof Expense) {
+				if (((Expense)abstractExpense).Search(query)) {
+					expensesOrIncome.add(abstractExpense);
+				}
+			}
+		}
+		return expensesOrIncome;
+	}
+	public List<Friend> searchAllFriend(String query){
+		List<Friend> f = new ArrayList<Friend>();
+		for (Friend friend : friends) {
+			if (friend.search(query)) {
+				f.add(friend);
+			}
+		}
+		return f;
+	}
+	
+	public String writeToDocument() {
 
 		return id
 		+ ";" + name 
@@ -221,5 +252,35 @@ public class Owner {
 		+ ";" + gastado 
 		+ "\n";
 	}
+	
+	
+	@Override
+	public String toString() {
+
+		return id
+		 + name 
+		+  lastName  
+		+  appRequest.toString() 
+		+ disponible 
+		+ gastado ;
+	}
+	public List<AbstractExpense> searchAllExpense(String text, String text2) {
+		// TODO Auto-generated method stub
+		List<AbstractExpense> expensesOrIncome = new ArrayList<AbstractExpense>();
+		
+		for (AbstractExpense abstractExpense : expenses) {
+			if (abstractExpense instanceof Income) {
+				if (((Income)abstractExpense).Search(text, text2)) {
+					expensesOrIncome.add(abstractExpense);
+				}
+			}
+			if (abstractExpense instanceof Expense) {
+				if (((Expense)abstractExpense).Search(text, text2)) {
+					expensesOrIncome.add(abstractExpense);
+				}
+			}
+		}
+		return expensesOrIncome;	}
+	
 	
 }
